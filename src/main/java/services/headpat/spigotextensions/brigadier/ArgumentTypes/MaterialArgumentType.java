@@ -21,6 +21,10 @@ public class MaterialArgumentType implements ArgumentType<Material> {
 		return new MaterialArgumentType();
 	}
 
+	public static Material getMaterial(@NotNull CommandContext<?> context, String name) {
+		return context.getArgument(name, Material.class);
+	}
+
 	@Override
 	public Material parse(@NotNull StringReader reader) throws CommandSyntaxException {
 		Material material = Material.getMaterial(reader.readString());

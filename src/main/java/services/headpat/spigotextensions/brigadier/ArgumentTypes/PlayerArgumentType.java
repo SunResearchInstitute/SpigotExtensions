@@ -23,6 +23,10 @@ public class PlayerArgumentType implements ArgumentType<Player> {
 		return new PlayerArgumentType();
 	}
 
+	public static Player getPlayer(@NotNull CommandContext<?> context, String name) {
+		return context.getArgument(name, Player.class);
+	}
+
 	@Override
 	public Player parse(@NotNull StringReader reader) throws CommandSyntaxException {
 		Player player = Bukkit.getPlayer(reader.readString());

@@ -21,6 +21,10 @@ public class ParticleArgumentType implements ArgumentType<Particle> {
 		return new ParticleArgumentType();
 	}
 
+	public static Particle getParticle(@NotNull CommandContext<?> context, String name) {
+		return context.getArgument(name, Particle.class);
+	}
+
 	@Override
 	public Particle parse(StringReader reader) throws CommandSyntaxException {
 		Particle particle;
