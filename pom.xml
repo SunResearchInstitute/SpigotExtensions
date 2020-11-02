@@ -41,7 +41,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.jetbrains</groupId>
-			<artifactId>annotations-java5</artifactId>
+			<artifactId>annotations</artifactId>
 			<version>18.0.0</version>
 			<scope>compile</scope>
 		</dependency>
