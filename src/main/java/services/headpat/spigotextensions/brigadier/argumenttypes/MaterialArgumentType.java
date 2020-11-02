@@ -1,4 +1,4 @@
-package services.headpat.spigotextensions.brigadier.ArgumentTypes;
+package services.headpat.spigotextensions.brigadier.argumenttypes;
 
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
@@ -28,7 +28,7 @@ public class MaterialArgumentType implements ArgumentType<Material> {
 
 	@Override
 	public Material parse(@NotNull StringReader reader) throws CommandSyntaxException {
-		String str = reader.readString().toUpperCase();
+		String str = reader.getRemaining().toUpperCase();
 		if (str.equals("NONE")) {
 			return null;
 		} else {

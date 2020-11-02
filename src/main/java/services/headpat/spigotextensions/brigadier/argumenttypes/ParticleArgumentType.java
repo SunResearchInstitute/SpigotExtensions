@@ -1,4 +1,4 @@
-package services.headpat.spigotextensions.brigadier.ArgumentTypes;
+package services.headpat.spigotextensions.brigadier.argumenttypes;
 
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
@@ -29,12 +29,12 @@ public class ParticleArgumentType implements ArgumentType<Particle> {
 	@Override
 	public Particle parse(@NotNull StringReader reader) throws CommandSyntaxException {
 		Particle particle;
-		String str = reader.readString().toUpperCase();
+		String str = reader.getRemaining().toUpperCase();
 		if (str.equals("NONE")) {
 			particle = null;
 		} else {
 			try {
-				particle = Particle.valueOf(reader.readString());
+				particle = Particle.valueOf(str);
 			} catch (Exception e) {
 				throw CommandSyntaxException.BUILT_IN_EXCEPTIONS.dispatcherParseException().create("invalid particle.");
 			}

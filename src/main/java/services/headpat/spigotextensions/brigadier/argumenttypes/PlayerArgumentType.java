@@ -1,4 +1,4 @@
-package services.headpat.spigotextensions.brigadier.ArgumentTypes;
+package services.headpat.spigotextensions.brigadier.argumenttypes;
 
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
@@ -29,7 +29,7 @@ public class PlayerArgumentType implements ArgumentType<Player> {
 
 	@Override
 	public Player parse(@NotNull StringReader reader) throws CommandSyntaxException {
-		Player player = Bukkit.getPlayer(reader.readString());
+		Player player = Bukkit.getPlayer(reader.getRemaining());
 		if (player == null) {
 			throw CommandSyntaxException.BUILT_IN_EXCEPTIONS.dispatcherParseException().create("player not found.");
 		} else
