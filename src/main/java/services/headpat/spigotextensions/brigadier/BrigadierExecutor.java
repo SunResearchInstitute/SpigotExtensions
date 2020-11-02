@@ -25,7 +25,11 @@ public abstract class BrigadierExecutor implements TabExecutor {
 	@Override
 	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 		try {
-			this.commandDispatcher.execute(Utils.getBrigadierString(command, args), sender);
+			int result = this.commandDispatcher.execute(Utils.getBrigadierString(command, args), sender);
+			if (result <= 0) {
+				Utils.sendUsageMessage(sender, this.commandDispatcher.getAllUsage(this.commandDispatcher.getRoot(), sender, true));
+				return true;
+			}
 		} catch (CommandSyntaxException e) {
 			Utils.sendUsageMessage(sender, this.commandDispatcher.getAllUsage(this.commandDispatcher.getRoot(), sender, true));
 		}
