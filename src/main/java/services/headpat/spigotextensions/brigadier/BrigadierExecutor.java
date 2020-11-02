@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class BrigadierExecutor implements TabExecutor {
+public class BrigadierExecutor implements TabExecutor {
 	protected CommandDispatcher<CommandSender> commandDispatcher;
 
 	public BrigadierExecutor(LiteralArgumentBuilder<CommandSender> argumentBuilder) {
