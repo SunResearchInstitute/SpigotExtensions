@@ -24,9 +24,9 @@ public class MaterialArgumentType implements ArgumentType<Material> {
 	@Override
 	public Material parse(@NotNull StringReader reader) throws CommandSyntaxException {
 		Material material = Material.getMaterial(reader.readString());
-		if (material == null)
-			throw CommandSyntaxException.BUILT_IN_EXCEPTIONS.dispatcherParseException().createWithContext(reader, null);
-		else
+		if (material == null) {
+			throw CommandSyntaxException.BUILT_IN_EXCEPTIONS.dispatcherParseException().create("invalid material.");
+		} else
 			return material;
 	}
 

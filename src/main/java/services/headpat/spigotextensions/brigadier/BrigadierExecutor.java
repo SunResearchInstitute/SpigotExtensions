@@ -5,6 +5,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.Suggestion;
 import com.mojang.brigadier.suggestion.Suggestions;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -32,6 +33,9 @@ public class BrigadierExecutor implements TabExecutor {
 				return true;
 			}
 		} catch (CommandSyntaxException e) {
+			if (e.getMessage() != null)
+				sender.sendMessage(ChatColor.RED + e.getMessage());
+
 			Utils.sendUsageMessage(sender, this.commandDispatcher.getAllUsage(this.commandDispatcher.getRoot(), sender, true));
 		}
 		return true;

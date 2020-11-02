@@ -26,9 +26,9 @@ public class PlayerArgumentType implements ArgumentType<Player> {
 	@Override
 	public Player parse(@NotNull StringReader reader) throws CommandSyntaxException {
 		Player player = Bukkit.getPlayer(reader.readString());
-		if (player == null)
-			throw CommandSyntaxException.BUILT_IN_EXCEPTIONS.dispatcherParseException().createWithContext(reader, null);
-		else
+		if (player == null) {
+			throw CommandSyntaxException.BUILT_IN_EXCEPTIONS.dispatcherParseException().create("player not found.");
+		} else
 			return player;
 	}
 
