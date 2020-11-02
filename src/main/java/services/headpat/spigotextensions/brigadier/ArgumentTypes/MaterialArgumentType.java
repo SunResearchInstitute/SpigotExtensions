@@ -6,43 +6,41 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.HumanEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.Material;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
-public class PlayerArgumentType implements ArgumentType<Player> {
+public class MaterialArgumentType implements ArgumentType<Material> {
 	@Contract(value = " -> new", pure = true)
-	public static @NotNull
-	PlayerArgumentType player() {
-		return new PlayerArgumentType();
+	public static @NotNull MaterialArgumentType material() {
+		return new MaterialArgumentType();
 	}
 
 	@Override
-	public Player parse(@NotNull StringReader reader) throws CommandSyntaxException {
-		Player player = Bukkit.getPlayer(reader.readString());
-		if (player == null)
+	public Material parse(@NotNull StringReader reader) throws CommandSyntaxException {
+		Material material = Material.getMaterial(reader.readString());
+		if (material == null)
 			throw CommandSyntaxException.BUILT_IN_EXCEPTIONS.dispatcherParseException().createWithContext(reader, null);
 		else
-			return player;
+			return material;
 	}
 
 	@Override
-	public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, @NotNull SuggestionsBuilder builder) {
-		Bukkit.getOnlinePlayers().forEach(player -> {
-			if (player.getName().toLowerCase().startsWith(builder.getRemaining().toLowerCase()))
-				builder.suggest(player.getName());
-		});
+	public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
+		for (Material value : Material.values()) {
+			if (value.name().toLowerCase().startsWith(builder.getRemaining().toLowerCase()))
+				builder.suggest(value.name());
+		}
 		return builder.buildFuture();
 	}
 
 	@Override
 	public Collection<String> getExamples() {
-		return Bukkit.getOnlinePlayers().stream().map(HumanEntity::getName).collect(Collectors.toList());
+		return Arrays.stream(Material.values()).map(Enum::name).collect(Collectors.toList());
 	}
 }

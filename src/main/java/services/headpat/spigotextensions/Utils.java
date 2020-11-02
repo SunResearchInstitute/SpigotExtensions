@@ -1,4 +1,4 @@
-package services.headpat.spigotextensions.brigadier;
+package services.headpat.spigotextensions;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
