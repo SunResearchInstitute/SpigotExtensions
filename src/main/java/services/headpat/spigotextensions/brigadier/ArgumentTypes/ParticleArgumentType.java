@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
@@ -26,23 +27,36 @@ public class ParticleArgumentType implements ArgumentType<Particle> {
 	}
 
 	@Override
-	public Particle parse(StringReader reader) throws CommandSyntaxException {
+	public Particle parse(@NotNull StringReader reader) throws CommandSyntaxException {
 		Particle particle;
-		try {
-			particle = Particle.valueOf(reader.readString());
-		} catch (Exception e) {
-			throw CommandSyntaxException.BUILT_IN_EXCEPTIONS.dispatcherParseException().create("invalid particle.");
+		String str = reader.readString().toUpperCase();
+		if (str.equals("NONE")) {
+			particle = null;
+		} else {
+			try {
+				particle = Particle.valueOf(reader.readString());
+			} catch (Exception e) {
+				throw CommandSyntaxException.BUILT_IN_EXCEPTIONS.dispatcherParseException().create("invalid particle.");
+			}
 		}
 		return particle;
 	}
 
 	@Override
 	public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-		return null;
+		List<String> particleNames = Arrays.stream(Particle.values()).map(Enum::name).collect(Collectors.toList());
+		particleNames.add("NONE");
+		for (String particleName : particleNames) {
+			if (particleName.toLowerCase().startsWith(builder.getRemaining().toLowerCase()))
+				builder.suggest(particleName);
+		}
+		return builder.buildFuture();
 	}
 
 	@Override
 	public Collection<String> getExamples() {
-		return Arrays.stream(Particle.values()).map(Enum::name).collect(Collectors.toList());
+		List<String> examples = Arrays.stream(Particle.values()).map(Enum::name).collect(Collectors.toList());
+		examples.add("NONE");
+		return examples;
 	}
 }

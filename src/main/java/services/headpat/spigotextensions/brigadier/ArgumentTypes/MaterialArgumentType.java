@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
@@ -27,24 +28,33 @@ public class MaterialArgumentType implements ArgumentType<Material> {
 
 	@Override
 	public Material parse(@NotNull StringReader reader) throws CommandSyntaxException {
-		Material material = Material.getMaterial(reader.readString());
-		if (material == null) {
-			throw CommandSyntaxException.BUILT_IN_EXCEPTIONS.dispatcherParseException().create("invalid material.");
-		} else
-			return material;
+		String str = reader.readString().toUpperCase();
+		if (str.equals("NONE")) {
+			return null;
+		} else {
+			Material material = Material.getMaterial(str);
+			if (material == null) {
+				throw CommandSyntaxException.BUILT_IN_EXCEPTIONS.dispatcherParseException().create("invalid material.");
+			} else
+				return material;
+		}
 	}
 
 	@Override
 	public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-		for (Material value : Material.values()) {
-			if (value.name().toLowerCase().startsWith(builder.getRemaining().toLowerCase()))
-				builder.suggest(value.name());
+		List<String> materialNames = Arrays.stream(Material.values()).map(Enum::name).collect(Collectors.toList());
+		materialNames.add("NONE");
+		for (String materialName : materialNames) {
+			if (materialName.toLowerCase().startsWith(builder.getRemaining().toLowerCase()))
+				builder.suggest(materialName);
 		}
 		return builder.buildFuture();
 	}
 
 	@Override
 	public Collection<String> getExamples() {
-		return Arrays.stream(Material.values()).map(Enum::name).collect(Collectors.toList());
+		List<String> examples = Arrays.stream(Material.values()).map(Enum::name).collect(Collectors.toList());
+		examples.add("NONE");
+		return examples;
 	}
 }
