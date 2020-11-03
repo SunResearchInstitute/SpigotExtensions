@@ -29,7 +29,7 @@ public class PlayerArgumentType implements ArgumentType<Player> {
 
 	@Override
 	public Player parse(@NotNull StringReader reader) throws CommandSyntaxException {
-		Player player = Bukkit.getPlayer(reader.getRemaining());
+		Player player = Bukkit.getPlayer(reader.readUnquotedString());
 		if (player == null) {
 			throw CommandSyntaxException.BUILT_IN_EXCEPTIONS.dispatcherParseException().create("player not found.");
 		} else

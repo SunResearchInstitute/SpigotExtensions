@@ -28,7 +28,7 @@ public class MaterialArgumentType implements ArgumentType<Material> {
 
 	@Override
 	public Material parse(@NotNull StringReader reader) throws CommandSyntaxException {
-		String str = reader.getRemaining().toUpperCase();
+		String str = reader.readUnquotedString().toUpperCase();
 		if (str.equals("NONE")) {
 			return null;
 		} else {

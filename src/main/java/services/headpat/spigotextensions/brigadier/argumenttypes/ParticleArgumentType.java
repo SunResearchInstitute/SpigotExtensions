@@ -29,7 +29,7 @@ public class ParticleArgumentType implements ArgumentType<Particle> {
 	@Override
 	public Particle parse(@NotNull StringReader reader) throws CommandSyntaxException {
 		Particle particle;
-		String str = reader.getRemaining().toUpperCase();
+		String str = reader.readUnquotedString().toUpperCase();
 		if (str.equals("NONE")) {
 			particle = null;
 		} else {
