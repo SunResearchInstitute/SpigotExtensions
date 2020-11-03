@@ -9,6 +9,7 @@ import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import org.bukkit.Particle;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -16,18 +17,34 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
+/**
+ * {@link Particle} argument type to be used by brigadier.
+ * This class introduces "NONE" as an acceptable argument which will return NULL.
+ */
 public class ParticleArgumentType implements ArgumentType<Particle> {
+	/**
+	 * Shortcut to create a new {@link ParticleArgumentType} instance.
+	 *
+	 * @return {@link ParticleArgumentType} instance.
+	 */
 	@Contract(value = " -> new", pure = true)
 	public static @NotNull ParticleArgumentType particle() {
 		return new ParticleArgumentType();
 	}
 
-	public static Particle getParticle(@NotNull CommandContext<?> context, String name) {
+	/**
+	 * Quick shortcut of {@link CommandContext#getArgument(String, Class)} for a particle argument.
+	 *
+	 * @param context Command context.
+	 * @param name    Name of the argument.
+	 * @return The particle specified by the argument name in the command context.
+	 */
+	public static @Nullable Particle getParticle(@NotNull CommandContext<?> context, String name) {
 		return context.getArgument(name, Particle.class);
 	}
 
 	@Override
-	public Particle parse(@NotNull StringReader reader) throws CommandSyntaxException {
+	public @Nullable Particle parse(@NotNull StringReader reader) throws CommandSyntaxException {
 		Particle particle;
 		String str = reader.readUnquotedString().toUpperCase();
 		if (str.equals("NONE")) {

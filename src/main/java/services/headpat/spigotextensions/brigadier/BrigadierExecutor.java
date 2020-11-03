@@ -16,9 +16,17 @@ import services.headpat.spigotextensions.Utils;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Creates autocomplete suggestions and onCommand handling automatically using {@link LiteralArgumentBuilder}.
+ */
 public class BrigadierExecutor implements TabExecutor {
 	protected CommandDispatcher<CommandSender> commandDispatcher;
 
+	/**
+	 * Returning 1 from an executor in the LiteralArgumentBuilder will act as true and 0 and below will act as false.
+	 *
+	 * @param argumentBuilder The literal argument builder to create the command from.
+	 */
 	public BrigadierExecutor(LiteralArgumentBuilder<CommandSender> argumentBuilder) {
 		commandDispatcher = new CommandDispatcher<>();
 		commandDispatcher.register(argumentBuilder);

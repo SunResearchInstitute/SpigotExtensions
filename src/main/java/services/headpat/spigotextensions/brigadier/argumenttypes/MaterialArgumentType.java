@@ -15,12 +15,28 @@ import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
+/**
+ * {@link Material} argument type to be used by brigadier.
+ */
 public class MaterialArgumentType implements ArgumentType<Material> {
+
+	/**
+	 * Shortcut to create a new {@link MaterialArgumentType} instance.
+	 *
+	 * @return {@link MaterialArgumentType} instance.
+	 */
 	@Contract(value = " -> new", pure = true)
 	public static @NotNull MaterialArgumentType material() {
 		return new MaterialArgumentType();
 	}
 
+	/**
+	 * Quick shortcut of {@link CommandContext#getArgument(String, Class)} for a material argument.
+	 *
+	 * @param context Command context.
+	 * @param name    Name of the argument.
+	 * @return The material specified by the argument name in the command context.
+	 */
 	public static Material getMaterial(@NotNull CommandContext<?> context, String name) {
 		return context.getArgument(name, Material.class);
 	}

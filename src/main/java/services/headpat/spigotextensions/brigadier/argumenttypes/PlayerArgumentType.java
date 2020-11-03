@@ -16,13 +16,28 @@ import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
+/**
+ * {@link Player} argument type to be used by brigadier.
+ */
 public class PlayerArgumentType implements ArgumentType<Player> {
+	/**
+	 * Shortcut to create a new {@link PlayerArgumentType} instance.
+	 *
+	 * @return {@link PlayerArgumentType} instance.
+	 */
 	@Contract(value = " -> new", pure = true)
 	public static @NotNull
 	PlayerArgumentType player() {
 		return new PlayerArgumentType();
 	}
 
+	/**
+	 * Quick shortcut of {@link CommandContext#getArgument(String, Class)} for a player argument.
+	 *
+	 * @param context Command context.
+	 * @param name    Name of the argument.
+	 * @return The player specified by the argument name in the command context.
+	 */
 	public static Player getPlayer(@NotNull CommandContext<?> context, String name) {
 		return context.getArgument(name, Player.class);
 	}
