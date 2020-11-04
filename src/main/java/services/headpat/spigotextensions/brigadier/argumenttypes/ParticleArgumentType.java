@@ -40,7 +40,11 @@ public class ParticleArgumentType implements ArgumentType<Particle> {
 	 * @return The particle specified by the argument name in the command context.
 	 */
 	public static @Nullable Particle getParticle(@NotNull CommandContext<?> context, String name) {
-		return context.getArgument(name, Particle.class);
+		try {
+			return context.getArgument(name, Particle.class);
+		} catch (IllegalArgumentException e) {
+			return null;
+		}
 	}
 
 	@Override
