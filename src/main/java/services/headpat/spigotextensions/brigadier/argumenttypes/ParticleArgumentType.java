@@ -42,7 +42,7 @@ public class ParticleArgumentType implements ArgumentType<Particle> {
 	public static @Nullable Particle getParticle(@NotNull CommandContext<?> context, String name) {
 		try {
 			return context.getArgument(name, Particle.class);
-		} catch (IllegalArgumentException e) {
+		} catch (Exception e) {
 			return null;
 		}
 	}
