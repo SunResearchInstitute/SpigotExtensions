@@ -1,4 +1,4 @@
-package services.headpat.spigotextensions.brigadier.argumenttypes;
+package services.headpat.spigotextensions.brigadier.arguments;
 
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
