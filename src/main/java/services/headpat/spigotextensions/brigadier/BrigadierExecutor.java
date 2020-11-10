@@ -11,8 +11,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import services.headpat.spigotextensions.Utils;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,25 +35,41 @@ public class BrigadierExecutor implements TabExecutor {
 	@Override
 	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 		try {
-			int result = this.commandDispatcher.execute(Utils.getBrigadierString(command, args), sender);
+			int result = this.commandDispatcher.execute(getBrigadierString(command, args), sender);
 			if (result <= 0) {
-				Utils.sendUsageMessage(sender, this.commandDispatcher.getAllUsage(this.commandDispatcher.getRoot(), sender, true));
+				sendUsageMessage(sender, this.commandDispatcher.getAllUsage(this.commandDispatcher.getRoot(), sender, true));
 				return true;
 			}
 		} catch (CommandSyntaxException e) {
 			if (e.getMessage() != null)
 				sender.sendMessage(ChatColor.RED + e.getMessage());
 
-			Utils.sendUsageMessage(sender, this.commandDispatcher.getAllUsage(this.commandDispatcher.getRoot(), sender, true));
+			sendUsageMessage(sender, this.commandDispatcher.getAllUsage(this.commandDispatcher.getRoot(), sender, true));
 		}
 		return true;
 	}
 
 	@Override
-	public @Nullable
-	List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
-		String commandArgs = Utils.getBrigadierString(command, args);
+	public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
+		String commandArgs = getBrigadierString(command, args);
 		Suggestions suggestions = commandDispatcher.getCompletionSuggestions(commandDispatcher.parse(commandArgs, sender)).join();
 		return suggestions.getList().stream().map(Suggestion::getText).collect(Collectors.toList());
+	}
+
+	private static void sendUsageMessage(@NotNull CommandSender sender, String[] brigadierUsages) {
+		sender.sendMessage(ChatColor.RED + "Usages:");
+		Arrays.stream(brigadierUsages).forEach(s -> sender.sendMessage(ChatColor.RED + "/" + s));
+	}
+
+	private static @NotNull
+	String getBrigadierString(@NotNull Command command, String[] args) {
+		return String.join(" ", addBeginningString(command.getName(), args));
+	}
+
+	private static String @NotNull [] addBeginningString(String str, @NotNull String @NotNull ... strings) {
+		String[] newStrings = new String[strings.length + 1];
+		newStrings[0] = str;
+		System.arraycopy(strings, 0, newStrings, 1, strings.length);
+		return newStrings;
 	}
 }
