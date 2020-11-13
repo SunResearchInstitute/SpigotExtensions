@@ -1,35 +1,20 @@
-package services.headpat.spigotextensions;
+package services.headpat.spigotextensions.utils;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-public class Utils {
+public class ChatUtils {
+	/**
+	 * @param str The original string using `&` color codes.
+	 * @return The string with all color codes using `&` convert to `§`.
+	 */
 	@Contract(pure = true)
 	public static @NotNull String covertColorCodes(@NotNull String str) {
 		return str.replaceAll("&(?=[0-9a-fkl-mr])", "§");
-	}
-
-	/**
-	 * @param chance integer percentage.
-	 * @return The chance result;
-	 */
-	public static boolean percentChance(int chance) {
-		return Math.random() < (chance / 100.0d);
-	}
-
-	public static int timeToTicks(int minutes, int seconds) {
-		return ((minutes * 60) + seconds) * 20;
 	}
 
 	/**
@@ -69,7 +54,7 @@ public class Utils {
 	 * @return The text-wrapped lore.
 	 */
 	public static @NotNull List<String> wrapLore(String lore) {
-		return (Utils.wrapLore(lore, 25, ChatColor.DARK_PURPLE));
+		return (ChatUtils.wrapLore(lore, 25, ChatColor.DARK_PURPLE));
 	}
 
 	/**
@@ -80,27 +65,6 @@ public class Utils {
 	 * @return The text-wrapped lore.
 	 */
 	public static @NotNull List<String> wrapLore(String lore, ChatColor loreChatColor) {
-		return (Utils.wrapLore(lore, 25, loreChatColor));
-	}
-
-	/**
-	 * Gets nearby players only, removing the time to find regular entities.
-	 *
-	 * @param location      Location of where to search.
-	 * @param radius        Radius to search for players.
-	 * @param sortByClosest Whether to sort Set by proximity.
-	 * @return Players near the specified location.
-	 */
-	public static LinkedHashSet<Player> getNearbyPlayers(Location location, double radius, boolean sortByClosest) {
-		Stream<? extends Player> stream = Bukkit.getOnlinePlayers().stream().filter((player) -> {
-			if (location.getWorld() != player.getWorld()) {
-				return (false);
-			}
-			return (location.distanceSquared(player.getLocation()) <= (radius * radius));
-		});
-		if (sortByClosest) {
-			stream = stream.sorted(Comparator.comparingDouble(p -> p.getLocation().distanceSquared(location)));
-		}
-		return (stream.collect(Collectors.toCollection(LinkedHashSet::new)));
+		return (ChatUtils.wrapLore(lore, 25, loreChatColor));
 	}
 }
