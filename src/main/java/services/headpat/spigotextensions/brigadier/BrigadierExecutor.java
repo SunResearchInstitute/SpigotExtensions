@@ -28,8 +28,8 @@ public class BrigadierExecutor implements TabExecutor {
 	 * @param argumentBuilder The literal argument builder to create the command from.
 	 */
 	public BrigadierExecutor(LiteralArgumentBuilder<CommandSender> argumentBuilder) {
-		commandDispatcher = new CommandDispatcher<>();
-		commandDispatcher.register(argumentBuilder);
+		this.commandDispatcher = new CommandDispatcher<>();
+		this.commandDispatcher.register(argumentBuilder);
 	}
 
 	@Override
