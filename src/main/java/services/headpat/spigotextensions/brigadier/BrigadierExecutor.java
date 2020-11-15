@@ -12,7 +12,6 @@ import org.bukkit.command.TabExecutor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,14 +36,14 @@ public class BrigadierExecutor implements TabExecutor {
 		try {
 			int result = this.commandDispatcher.execute(getBrigadierString(command, args), sender);
 			if (result <= 0) {
-				sendUsageMessage(sender, this.commandDispatcher.getAllUsage(this.commandDispatcher.getRoot(), sender, true));
+				sendUsageMessage(sender, this.commandDispatcher);
 				return true;
 			}
 		} catch (CommandSyntaxException e) {
 			if (e.getMessage() != null)
 				sender.sendMessage(ChatColor.RED + e.getMessage());
 
-			sendUsageMessage(sender, this.commandDispatcher.getAllUsage(this.commandDispatcher.getRoot(), sender, true));
+			sendUsageMessage(sender, this.commandDispatcher);
 		}
 		return true;
 	}
@@ -56,9 +55,10 @@ public class BrigadierExecutor implements TabExecutor {
 		return suggestions.getList().stream().map(Suggestion::getText).collect(Collectors.toList());
 	}
 
-	private static void sendUsageMessage(@NotNull CommandSender sender, String[] brigadierUsages) {
+	private static void sendUsageMessage(@NotNull CommandSender sender, @NotNull CommandDispatcher<CommandSender> commandDispatcher) {
 		sender.sendMessage(ChatColor.RED + "Usages:");
-		Arrays.stream(brigadierUsages).forEach(s -> sender.sendMessage(ChatColor.RED + "/" + s));
+		for (String s : commandDispatcher.getAllUsage(commandDispatcher.getRoot(), sender, true))
+			sender.sendMessage(ChatColor.RED + "/" + s);
 	}
 
 	private static @NotNull
