@@ -1,5 +1,6 @@
 package services.headpat.spigotextensions.brigadier;
 
+import com.google.common.collect.ObjectArrays;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -44,6 +45,7 @@ public class BrigadierExecutor implements TabExecutor {
 				sender.sendMessage(ChatColor.RED + e.getMessage());
 
 			sendUsageMessage(sender, this.commandDispatcher);
+			return true;
 		}
 		return true;
 	}
@@ -63,13 +65,6 @@ public class BrigadierExecutor implements TabExecutor {
 
 	private static @NotNull
 	String getBrigadierString(@NotNull Command command, String[] args) {
-		return String.join(" ", addBeginningString(command.getName(), args));
-	}
-
-	private static String @NotNull [] addBeginningString(String str, @NotNull String @NotNull ... strings) {
-		String[] newStrings = new String[strings.length + 1];
-		newStrings[0] = str;
-		System.arraycopy(strings, 0, newStrings, 1, strings.length);
-		return newStrings;
+		return String.join(" ", ObjectArrays.concat(command.getName(), args));
 	}
 }
