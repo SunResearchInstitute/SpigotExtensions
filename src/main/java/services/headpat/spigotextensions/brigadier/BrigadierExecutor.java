@@ -52,7 +52,7 @@ public class BrigadierExecutor implements TabExecutor {
 	@Override
 	public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
 		String commandArgs = getBrigadierString(command, args);
-		Suggestions suggestions = commandDispatcher.getCompletionSuggestions(commandDispatcher.parse(commandArgs, sender)).join();
+		Suggestions suggestions = this.commandDispatcher.getCompletionSuggestions(this.commandDispatcher.parse(commandArgs, sender)).join();
 		return suggestions.getList().stream().map(Suggestion::getText).collect(Collectors.toList());
 	}
 
