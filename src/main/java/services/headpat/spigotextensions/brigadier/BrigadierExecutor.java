@@ -34,9 +34,9 @@ public class BrigadierExecutor implements TabExecutor {
 	}
 
 	@Override
-	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
 		try {
-			int result = this.commandDispatcher.execute(getBrigadierString(command, args), sender);
+			int result = this.commandDispatcher.execute(getCommandString(alias, args), sender);
 			if (result <= 0) {
 				sendUsageMessage(sender, this.commandDispatcher);
 				return true;
@@ -53,8 +53,8 @@ public class BrigadierExecutor implements TabExecutor {
 
 	@Override
 	public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
-		String commandArgs = getBrigadierString(command, args);
-		Suggestions suggestions = this.commandDispatcher.getCompletionSuggestions(this.commandDispatcher.parse(commandArgs, sender)).join();
+		String commandString = getCommandString(alias, args);
+		Suggestions suggestions = this.commandDispatcher.getCompletionSuggestions(this.commandDispatcher.parse(commandString, sender)).join();
 		return suggestions.getList().stream().map(Suggestion::getText).collect(Collectors.toList());
 	}
 
@@ -64,8 +64,7 @@ public class BrigadierExecutor implements TabExecutor {
 			sender.sendMessage(ChatColor.RED + "/" + s);
 	}
 
-	private static @NotNull
-	String getBrigadierString(@NotNull Command command, String[] args) {
-		return String.join(" ", ObjectArrays.concat(command.getName(), args));
+	public String getCommandString(String alias, String[] args) {
+		return String.join(" ", ObjectArrays.concat(alias, args));
 	}
 }
