@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.function.Supplier;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
@@ -26,11 +26,11 @@ public class BrigadierExecutor implements TabExecutor {
 	/**
 	 * Returning 1 from an executor in the LiteralArgumentBuilder will act as true and 0 and below will act as false.
 	 *
-	 * @param argumentBuilder The literal argument builder to create the command from.
+	 * @param dispatcherConsumer The consumer to register commands with.
 	 */
-	public BrigadierExecutor(@NotNull Supplier<LiteralArgumentBuilder<CommandSender>> argumentBuilder) {
+	public BrigadierExecutor(@NotNull Consumer<CommandDispatcher<CommandSender>> dispatcherConsumer) {
 		this.commandDispatcher = new CommandDispatcher<>();
-		this.commandDispatcher.register(argumentBuilder.get());
+		dispatcherConsumer.accept(commandDispatcher);
 	}
 
 	@Override
