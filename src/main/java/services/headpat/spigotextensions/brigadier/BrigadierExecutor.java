@@ -2,7 +2,6 @@ package services.headpat.spigotextensions.brigadier;
 
 import com.google.common.collect.ObjectArrays;
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.Suggestion;
 import com.mojang.brigadier.suggestion.Suggestions;
@@ -18,7 +17,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
- * Creates autocomplete suggestions and onCommand handling automatically using {@link LiteralArgumentBuilder}.
+ * Creates autocomplete suggestions and onCommand handling automatically.
  */
 public class BrigadierExecutor implements TabExecutor {
 	protected CommandDispatcher<CommandSender> commandDispatcher;
