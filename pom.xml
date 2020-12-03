@@ -24,6 +24,32 @@
 					<target>${java.version}</target>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.2.4</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<createDependencyReducedPom>false</createDependencyReducedPom>
+							<relocations>
+								<relocation>
+									<pattern>org.intellij.lang</pattern>
+									<shadedPattern>services.headpat.spigotextensions.libs.org.intellij.lang</shadedPattern>
+								</relocation>
+								<relocation>
+									<pattern>org.jetbrains.annotations</pattern>
+									<shadedPattern>services.headpat.spigotextensions.libs.org.jetbrains.annotations</shadedPattern>
+								</relocation>
+							</relocations>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
