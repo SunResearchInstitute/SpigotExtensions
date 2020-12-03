@@ -31,7 +31,7 @@
 				<version>3.2.4</version>
 				<executions>
 					<execution>
-						<phase>package</phase>
+						<phase>install</phase>
 						<goals>
 							<goal>shade</goal>
 						</goals>
@@ -86,7 +86,6 @@
 			<artifactId>annotations</artifactId>
 			<version>18.0.0</version>
 			<scope>compile</scope>
-			<optional>true</optional>
 		</dependency>
 	</dependencies>
 </project>
