@@ -37,18 +37,6 @@
 						</goals>
 						<configuration>
 							<createDependencyReducedPom>false</createDependencyReducedPom>
-							<relocations>
-								<relocation>
-									<pattern>org.intellij.lang</pattern>
-									<shadedPattern>services.headpat.spigotextensions.libs.org.intellij.lang
-									</shadedPattern>
-								</relocation>
-								<relocation>
-									<pattern>org.jetbrains.annotations</pattern>
-									<shadedPattern>services.headpat.spigotextensions.libs.org.jetbrains.annotations
-									</shadedPattern>
-								</relocation>
-							</relocations>
 						</configuration>
 					</execution>
 				</executions>
@@ -85,7 +73,7 @@
 			<groupId>org.jetbrains</groupId>
 			<artifactId>annotations</artifactId>
 			<version>18.0.0</version>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 </project>
