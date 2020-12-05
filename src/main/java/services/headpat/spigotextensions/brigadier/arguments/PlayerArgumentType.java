@@ -20,6 +20,9 @@ import java.util.stream.Collectors;
  * {@link Player} argument type to be used by brigadier.
  */
 public class PlayerArgumentType implements ArgumentType<Player> {
+	private PlayerArgumentType() {
+	}
+
 	/**
 	 * Shortcut to create a new {@link PlayerArgumentType} instance.
 	 *
@@ -40,6 +43,7 @@ public class PlayerArgumentType implements ArgumentType<Player> {
 	 */
 	public static Player getPlayer(@NotNull CommandContext<?> context, String name) {
 		return context.getArgument(name, Player.class);
+
 	}
 
 	@Override

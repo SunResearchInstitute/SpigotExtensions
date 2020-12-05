@@ -22,6 +22,9 @@ import java.util.stream.Collectors;
  * This class introduces "NONE" as an acceptable argument which will return NULL.
  */
 public class ParticleArgumentType implements ArgumentType<Particle> {
+	private ParticleArgumentType() {
+	}
+
 	/**
 	 * Shortcut to create a new {@link ParticleArgumentType} instance.
 	 *

@@ -10,7 +10,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -20,7 +19,7 @@ import java.util.stream.Collectors;
  * Creates autocomplete suggestions and onCommand handling automatically.
  */
 public class BrigadierExecutor implements TabExecutor {
-	protected CommandDispatcher<CommandSender> commandDispatcher;
+	protected final CommandDispatcher<CommandSender> commandDispatcher;
 
 	/**
 	 * Returning 1 from an executor in the LiteralArgumentBuilder will act as true and 0 and below will act as false.
@@ -33,7 +32,7 @@ public class BrigadierExecutor implements TabExecutor {
 	}
 
 	@Override
-	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
+	public final boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
 		try {
 			int result = this.commandDispatcher.execute(getCommandString(alias, args), sender);
 			if (result <= 0) {
@@ -51,7 +50,7 @@ public class BrigadierExecutor implements TabExecutor {
 	}
 
 	@Override
-	public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
+	public final @NotNull List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
 		String commandString = getCommandString(alias, args);
 		Suggestions suggestions = this.commandDispatcher.getCompletionSuggestions(this.commandDispatcher.parse(commandString, sender)).join();
 		return suggestions.getList().stream().map(Suggestion::getText).collect(Collectors.toList());
@@ -63,7 +62,7 @@ public class BrigadierExecutor implements TabExecutor {
 			sender.sendMessage(ChatColor.RED + "/" + s);
 	}
 
-	public String getCommandString(String alias, String[] args) {
+	public final String getCommandString(String alias, String[] args) {
 		return String.join(" ", ObjectArrays.concat(alias, args));
 	}
 }

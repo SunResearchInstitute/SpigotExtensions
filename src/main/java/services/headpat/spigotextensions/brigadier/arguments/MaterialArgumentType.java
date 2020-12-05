@@ -19,6 +19,8 @@ import java.util.stream.Collectors;
  * {@link Material} argument type to be used by brigadier.
  */
 public class MaterialArgumentType implements ArgumentType<Material> {
+	private MaterialArgumentType() {
+	}
 
 	/**
 	 * Shortcut to create a new {@link MaterialArgumentType} instance.
