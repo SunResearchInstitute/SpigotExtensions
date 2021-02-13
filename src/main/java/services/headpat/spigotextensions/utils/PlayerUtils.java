@@ -21,7 +21,7 @@ public class PlayerUtils {
 	 * @param sortByClosest Whether to sort Set by proximity.
 	 * @return Players near the specified location.
 	 */
-	public static @NonNull LinkedHashSet<Player> getNearbyPlayers(Location location, double radius, boolean sortByClosest) {
+	public static LinkedHashSet<Player> getNearbyPlayers(Location location, double radius, boolean sortByClosest) {
 		Stream<? extends Player> stream = Bukkit.getOnlinePlayers().stream().filter((player) -> {
 			if (location.getWorld() != player.getWorld()) {
 				return (false);
