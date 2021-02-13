@@ -6,9 +6,11 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.bukkit.Particle;
 import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
@@ -21,17 +23,15 @@ import java.util.stream.Collectors;
  * {@link Particle} argument type to be used by brigadier.
  * This class introduces "NONE" as an acceptable argument which will return NULL.
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ParticleArgumentType implements ArgumentType<Particle> {
-	private ParticleArgumentType() {
-	}
-
 	/**
 	 * Shortcut to create a new {@link ParticleArgumentType} instance.
 	 *
 	 * @return {@link ParticleArgumentType} instance.
 	 */
 	@Contract(value = " -> new", pure = true)
-	public static @NotNull ParticleArgumentType particle() {
+	public static @NonNull ParticleArgumentType particle() {
 		return new ParticleArgumentType();
 	}
 
@@ -42,7 +42,7 @@ public class ParticleArgumentType implements ArgumentType<Particle> {
 	 * @param name    Name of the argument.
 	 * @return The particle specified by the argument name in the command context.
 	 */
-	public static @Nullable Particle getParticle(@NotNull CommandContext<?> context, String name) {
+	public static @Nullable Particle getParticle(@NonNull CommandContext<?> context, String name) {
 		try {
 			return context.getArgument(name, Particle.class);
 		} catch (Exception e) {
@@ -51,7 +51,7 @@ public class ParticleArgumentType implements ArgumentType<Particle> {
 	}
 
 	@Override
-	public @Nullable Particle parse(@NotNull StringReader reader) throws CommandSyntaxException {
+	public @Nullable Particle parse(@NonNull StringReader reader) throws CommandSyntaxException {
 		Particle particle;
 		String str = reader.readUnquotedString().toUpperCase();
 		if (str.equals("NONE")) {

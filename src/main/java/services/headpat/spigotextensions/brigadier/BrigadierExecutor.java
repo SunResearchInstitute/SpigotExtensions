@@ -5,11 +5,11 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.Suggestion;
 import com.mojang.brigadier.suggestion.Suggestions;
+import lombok.NonNull;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -26,13 +26,13 @@ public class BrigadierExecutor implements TabExecutor {
 	 *
 	 * @param dispatcherConsumer The consumer to register commands with.
 	 */
-	public BrigadierExecutor(@NotNull Consumer<CommandDispatcher<CommandSender>> dispatcherConsumer) {
+	public BrigadierExecutor(@NonNull Consumer<CommandDispatcher<CommandSender>> dispatcherConsumer) {
 		this.commandDispatcher = new CommandDispatcher<>();
 		dispatcherConsumer.accept(commandDispatcher);
 	}
 
 	@Override
-	public final boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
+	public final boolean onCommand(@NonNull CommandSender sender, @NonNull Command command, @NonNull String alias, @NonNull String[] args) {
 		try {
 			int result = this.commandDispatcher.execute(getCommandString(alias, args), sender);
 			if (result <= 0) {
@@ -50,13 +50,13 @@ public class BrigadierExecutor implements TabExecutor {
 	}
 
 	@Override
-	public final @NotNull List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
+	public final @NonNull List<String> onTabComplete(@NonNull CommandSender sender, @NonNull Command command, @NonNull String alias, @NonNull String[] args) {
 		String commandString = getCommandString(alias, args);
 		Suggestions suggestions = this.commandDispatcher.getCompletionSuggestions(this.commandDispatcher.parse(commandString, sender)).join();
 		return suggestions.getList().stream().map(Suggestion::getText).collect(Collectors.toList());
 	}
 
-	private static void sendUsageMessage(@NotNull CommandSender sender, @NotNull CommandDispatcher<CommandSender> commandDispatcher) {
+	private static void sendUsageMessage(@NonNull CommandSender sender, @NonNull CommandDispatcher<CommandSender> commandDispatcher) {
 		sender.sendMessage(ChatColor.RED + "Usages:");
 		for (String s : commandDispatcher.getAllUsage(commandDispatcher.getRoot(), sender, true))
 			sender.sendMessage(ChatColor.RED + "/" + s);

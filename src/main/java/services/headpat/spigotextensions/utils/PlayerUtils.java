@@ -1,5 +1,7 @@
 package services.headpat.spigotextensions.utils;
 
+import lombok.NonNull;
+import lombok.experimental.UtilityClass;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -9,6 +11,7 @@ import java.util.LinkedHashSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@UtilityClass
 public class PlayerUtils {
 	/**
 	 * Gets nearby players only, removing the time to find regular entities.
@@ -18,7 +21,7 @@ public class PlayerUtils {
 	 * @param sortByClosest Whether to sort Set by proximity.
 	 * @return Players near the specified location.
 	 */
-	public static LinkedHashSet<Player> getNearbyPlayers(Location location, double radius, boolean sortByClosest) {
+	public static @NonNull LinkedHashSet<Player> getNearbyPlayers(Location location, double radius, boolean sortByClosest) {
 		Stream<? extends Player> stream = Bukkit.getOnlinePlayers().stream().filter((player) -> {
 			if (location.getWorld() != player.getWorld()) {
 				return (false);

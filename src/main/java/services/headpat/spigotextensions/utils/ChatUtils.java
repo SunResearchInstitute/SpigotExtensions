@@ -1,19 +1,21 @@
 package services.headpat.spigotextensions.utils;
 
+import lombok.NonNull;
+import lombok.experimental.UtilityClass;
 import org.bukkit.ChatColor;
 import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@UtilityClass
 public class ChatUtils {
 	/**
 	 * @param str The original string using `&` color codes.
 	 * @return The string with all color codes using `&` convert to `§`.
 	 */
 	@Contract(pure = true)
-	public static @NotNull String covertColorCodes(@NotNull String str) {
+	public static @NonNull String covertColorCodes(@NonNull String str) {
 		return str.replaceAll("&(?=[0-9a-fkl-mr])", "§");
 	}
 
@@ -24,7 +26,7 @@ public class ChatUtils {
 	 * @param lineLength The maximum length for a single line.
 	 * @return The text-wrapped lore.
 	 */
-	public static @NotNull List<String> wrapLore(@NotNull String lore, int lineLength, ChatColor loreChatColor) {
+	public static @NonNull List<String> wrapLore(@NonNull String lore, int lineLength, ChatColor loreChatColor) {
 		String[] words = lore.split(" ");
 
 		List<String> result = new ArrayList<>();
@@ -53,7 +55,7 @@ public class ChatUtils {
 	 * @param lore The full length lore with no breaks.
 	 * @return The text-wrapped lore.
 	 */
-	public static @NotNull List<String> wrapLore(String lore) {
+	public static @NonNull List<String> wrapLore(String lore) {
 		return (ChatUtils.wrapLore(lore, 25, ChatColor.DARK_PURPLE));
 	}
 
@@ -64,7 +66,7 @@ public class ChatUtils {
 	 * @param loreChatColor The color of the lore.
 	 * @return The text-wrapped lore.
 	 */
-	public static @NotNull List<String> wrapLore(String lore, ChatColor loreChatColor) {
+	public static @NonNull List<String> wrapLore(String lore, ChatColor loreChatColor) {
 		return (ChatUtils.wrapLore(lore, 25, loreChatColor));
 	}
 }

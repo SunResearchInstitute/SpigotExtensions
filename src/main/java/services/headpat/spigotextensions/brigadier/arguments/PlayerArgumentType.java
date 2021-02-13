@@ -6,11 +6,13 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
@@ -19,17 +21,15 @@ import java.util.stream.Collectors;
 /**
  * {@link Player} argument type to be used by brigadier.
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PlayerArgumentType implements ArgumentType<Player> {
-	private PlayerArgumentType() {
-	}
-
 	/**
 	 * Shortcut to create a new {@link PlayerArgumentType} instance.
 	 *
 	 * @return {@link PlayerArgumentType} instance.
 	 */
 	@Contract(value = " -> new", pure = true)
-	public static @NotNull
+	public static @NonNull
 	PlayerArgumentType player() {
 		return new PlayerArgumentType();
 	}
@@ -41,13 +41,12 @@ public class PlayerArgumentType implements ArgumentType<Player> {
 	 * @param name    Name of the argument.
 	 * @return The player specified by the argument name in the command context.
 	 */
-	public static Player getPlayer(@NotNull CommandContext<?> context, String name) {
+	public static Player getPlayer(@NonNull CommandContext<?> context, String name) {
 		return context.getArgument(name, Player.class);
-
 	}
 
 	@Override
-	public Player parse(@NotNull StringReader reader) throws CommandSyntaxException {
+	public Player parse(@NonNull StringReader reader) throws CommandSyntaxException {
 		Player player = Bukkit.getPlayer(reader.readUnquotedString());
 		if (player == null) {
 			throw CommandSyntaxException.BUILT_IN_EXCEPTIONS.dispatcherParseException().create("player not found.");
@@ -56,7 +55,7 @@ public class PlayerArgumentType implements ArgumentType<Player> {
 	}
 
 	@Override
-	public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, @NotNull SuggestionsBuilder builder) {
+	public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, @NonNull SuggestionsBuilder builder) {
 		Bukkit.getOnlinePlayers().forEach(player -> {
 			if (player.getName().toLowerCase().startsWith(builder.getRemaining().toLowerCase()))
 				builder.suggest(player.getName());

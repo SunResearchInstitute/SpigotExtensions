@@ -6,6 +6,8 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.bukkit.Material;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -18,10 +20,8 @@ import java.util.stream.Collectors;
 /**
  * {@link Material} argument type to be used by brigadier.
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MaterialArgumentType implements ArgumentType<Material> {
-	private MaterialArgumentType() {
-	}
-
 	/**
 	 * Shortcut to create a new {@link MaterialArgumentType} instance.
 	 *
