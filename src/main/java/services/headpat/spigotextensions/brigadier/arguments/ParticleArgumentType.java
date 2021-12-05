@@ -10,8 +10,6 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.bukkit.Particle;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -30,7 +28,6 @@ public class ParticleArgumentType implements ArgumentType<Particle> {
 	 *
 	 * @return {@link ParticleArgumentType} instance.
 	 */
-	@Contract(value = " -> new", pure = true)
 	public static @NonNull ParticleArgumentType particle() {
 		return new ParticleArgumentType();
 	}
@@ -42,7 +39,7 @@ public class ParticleArgumentType implements ArgumentType<Particle> {
 	 * @param name    Name of the argument.
 	 * @return The particle specified by the argument name in the command context.
 	 */
-	public static @Nullable Particle getParticle(@NonNull CommandContext<?> context, String name) {
+	public static Particle getParticle(@NonNull CommandContext<?> context, String name) {
 		try {
 			return context.getArgument(name, Particle.class);
 		} catch (Exception e) {
@@ -51,7 +48,7 @@ public class ParticleArgumentType implements ArgumentType<Particle> {
 	}
 
 	@Override
-	public @Nullable Particle parse(@NonNull StringReader reader) throws CommandSyntaxException {
+	public Particle parse(@NonNull StringReader reader) throws CommandSyntaxException {
 		Particle particle;
 		String str = reader.readUnquotedString().toUpperCase();
 		if (str.equals("NONE")) {

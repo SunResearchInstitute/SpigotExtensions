@@ -9,8 +9,6 @@ import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.bukkit.Material;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -27,8 +25,7 @@ public class MaterialArgumentType implements ArgumentType<Material> {
 	 *
 	 * @return {@link MaterialArgumentType} instance.
 	 */
-	@Contract(value = " -> new", pure = true)
-	public static @NotNull MaterialArgumentType material() {
+	public static MaterialArgumentType material() {
 		return new MaterialArgumentType();
 	}
 
@@ -39,12 +36,12 @@ public class MaterialArgumentType implements ArgumentType<Material> {
 	 * @param name    Name of the argument.
 	 * @return The material specified by the argument name in the command context.
 	 */
-	public static Material getMaterial(@NotNull CommandContext<?> context, String name) {
+	public static Material getMaterial(CommandContext<?> context, String name) {
 		return context.getArgument(name, Material.class);
 	}
 
 	@Override
-	public Material parse(@NotNull StringReader reader) throws CommandSyntaxException {
+	public Material parse(StringReader reader) throws CommandSyntaxException {
 		String str = reader.readUnquotedString().toUpperCase();
 		Material material = Material.getMaterial(str);
 		if (material == null) {
@@ -55,7 +52,7 @@ public class MaterialArgumentType implements ArgumentType<Material> {
 	}
 
 	@Override
-	public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, @NotNull SuggestionsBuilder builder) {
+	public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
 		Arrays.stream(Material.values()).map(Enum::name).collect(Collectors.toList()).forEach(materialName -> {
 			if (materialName.toLowerCase().startsWith(builder.getRemaining().toLowerCase()))
 				builder.suggest(materialName);

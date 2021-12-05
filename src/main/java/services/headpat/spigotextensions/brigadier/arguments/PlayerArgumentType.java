@@ -12,7 +12,6 @@ import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.Contract;
 
 import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
@@ -28,7 +27,6 @@ public class PlayerArgumentType implements ArgumentType<Player> {
 	 *
 	 * @return {@link PlayerArgumentType} instance.
 	 */
-	@Contract(value = " -> new", pure = true)
 	public static @NonNull
 	PlayerArgumentType player() {
 		return new PlayerArgumentType();

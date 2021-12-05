@@ -3,7 +3,6 @@ package services.headpat.spigotextensions.utils;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import org.bukkit.ChatColor;
-import org.jetbrains.annotations.Contract;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,6 @@ public class ChatUtils {
 	 * @param str The original string using `&` color codes.
 	 * @return The string with all color codes using `&` convert to `§`.
 	 */
-	@Contract(pure = true)
 	public static @NonNull String covertColorCodes(@NonNull String str) {
 		return str.replaceAll("&(?=[0-9a-fkl-mr])", "§");
 	}
