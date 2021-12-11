@@ -121,20 +121,20 @@ public class ChatUtils {
 		String[] words = lore.split(" ");
 
 		List<Component> result = new ArrayList<>();
-		TextComponent.Builder builder = Component.text();
+		StringBuilder builder = new StringBuilder();
 		for (String word : words) {
-			if (builder.content().length() == 0 || ((builder.content().length() + 1 + word.length()) <= lineLength)) {
-				if (builder.content().length() > 0) {
-					builder.append(Component.text(' '));
+			if (builder.length() == 0 || ((builder.length() + 1 + word.length()) <= lineLength)) {
+				if (builder.length() > 0) {
+					builder.append(' ');
 				}
 			} else {
-				result.add(builder.color(loreChatColor).decorate(TextDecoration.ITALIC).build());
-				builder = Component.text();
+				result.add(Component.text(builder.toString()).color(loreChatColor).decorate(TextDecoration.ITALIC));
+				builder.setLength(0);
 			}
-			builder.append(Component.text(word));
+			builder.append(word);
 		}
-		if (builder.content().length() != 0) {
-			result.add(builder.color(loreChatColor).decorate(TextDecoration.ITALIC).build());
+		if (builder.length() != 0) {
+			result.add(Component.text(builder.toString()).color(loreChatColor).decorate(TextDecoration.ITALIC));
 		}
 
 		return (result);

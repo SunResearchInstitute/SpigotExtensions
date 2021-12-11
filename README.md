@@ -1,2 +1,2 @@
 # SpigotExtensions
-[![](https://jitpack.io/v/HeadpatServices/SpigotExtensions.svg)](https://jitpack.io/#HeadpatServices/SpigotExtensions)
+[![](https://jitpack.io/v/SunResearchInstitute/spigotextensions.svg)](https://jitpack.io/#SunResearchInstitute/spigotextensions)
