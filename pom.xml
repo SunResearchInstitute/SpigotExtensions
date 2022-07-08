@@ -6,7 +6,7 @@
 
 	<groupId>services.headpat</groupId>
 	<artifactId>spigotextensions</artifactId>
-	<version>2.1.1</version>
+	<version>3.0.0</version>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -34,10 +34,6 @@
 			<url>https://papermc.io/repo/repository/maven-public/</url>
 		</repository>
 		<repository>
-			<id>spigotmc-repo</id>
-			<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-		</repository>
-		<repository>
 			<id>minecraft-libraries</id>
 			<name>Minecraft Libraries</name>
 			<url>https://libraries.minecraft.net</url>
@@ -49,18 +45,6 @@
 			<groupId>io.papermc.paper</groupId>
 			<artifactId>paper-api</artifactId>
 			<version>1.19-R0.1-SNAPSHOT</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.spigotmc</groupId>
-			<artifactId>spigot-api</artifactId>
-			<version>1.19-R0.1-SNAPSHOT</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.mojang</groupId>
-			<artifactId>brigadier</artifactId>
-			<version>1.0.18</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
