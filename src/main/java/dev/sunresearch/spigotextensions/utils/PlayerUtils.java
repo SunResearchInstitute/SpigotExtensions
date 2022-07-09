@@ -1,4 +1,4 @@
-package services.headpat.spigotextensions.utils;
+package dev.sunresearch.spigotextensions.utils;
 
 import lombok.experimental.UtilityClass;
 import org.bukkit.Bukkit;

@@ -1,4 +1,4 @@
-package services.headpat.spigotextensions.brigadier.arguments;
+package dev.sunresearch.spigotextensions.brigadier.arguments;
 
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
@@ -53,7 +53,7 @@ public class MaterialArgumentType implements ArgumentType<Material> {
 
 	@Override
 	public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-		Arrays.stream(Material.values()).map(Enum::name).collect(Collectors.toList()).forEach(materialName -> {
+		Arrays.stream(Material.values()).map(Enum::name).toList().forEach(materialName -> {
 			if (materialName.toLowerCase().startsWith(builder.getRemaining().toLowerCase()))
 				builder.suggest(materialName);
 		});
