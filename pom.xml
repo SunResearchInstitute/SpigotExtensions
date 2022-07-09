@@ -6,7 +6,7 @@
 
 	<groupId>services.headpat</groupId>
 	<artifactId>spigotextensions</artifactId>
-	<version>2.1.1</version>
+	<version>3.0.0</version>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -24,6 +24,32 @@
 					<source>${java.version}</source>
 					<target>${java.version}</target>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.3.0</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<artifactSet>
+								<includes>
+									<include>me.lucko:commodore</include>
+								</includes>
+							</artifactSet>
+							<relocations>
+								<relocation>
+									<pattern>me.lucko.commodore</pattern>
+									<shadedPattern>services.headpat.spigotextensions.libs.commodore</shadedPattern>
+								</relocation>
+							</relocations>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
@@ -58,10 +84,10 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.mojang</groupId>
-			<artifactId>brigadier</artifactId>
-			<version>1.0.18</version>
-			<scope>provided</scope>
+			<groupId>me.lucko</groupId>
+			<artifactId>commodore</artifactId>
+			<version>2.0</version>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
