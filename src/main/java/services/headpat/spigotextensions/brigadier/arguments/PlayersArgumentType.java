@@ -46,7 +46,7 @@ public class PlayersArgumentType implements ArgumentType<Collection<? extends Pl
 
     @Override
     public Collection<? extends Player> parse(@NonNull StringReader reader) throws CommandSyntaxException {
-        String str = reader.readUnquotedString();
+        String str = reader.readString();
         if (str.equals("*")) {
             return Bukkit.getOnlinePlayers();
         }
