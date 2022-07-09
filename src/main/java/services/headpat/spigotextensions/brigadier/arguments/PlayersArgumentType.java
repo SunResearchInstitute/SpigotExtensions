@@ -61,9 +61,11 @@ public class PlayersArgumentType implements ArgumentType<Collection<? extends Pl
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, @NonNull SuggestionsBuilder builder) {
-        Bukkit.getOnlinePlayers().forEach(player -> {
-            if (player.getName().toLowerCase().startsWith(builder.getRemaining().toLowerCase()))
-                builder.suggest(player.getName());
+        List<String> strings = Bukkit.getOnlinePlayers().stream().map(HumanEntity::getName).collect(Collectors.toList());
+        strings.add("*");
+        strings.forEach(s -> {
+            if (s.toLowerCase().startsWith(builder.getRemaining().toLowerCase()))
+                builder.suggest(s);
         });
         return builder.buildFuture();
     }
