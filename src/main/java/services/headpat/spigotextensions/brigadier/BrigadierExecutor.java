@@ -21,19 +21,23 @@ import java.util.function.Function;
  */
 public class BrigadierExecutor implements CommandExecutor {
     protected final CommandDispatcher<CommandSender> commandDispatcher;
+    private final LiteralCommandNode<CommandSender> commandNode;
 
     /**
      * Returning 1 from an executor in the LiteralArgumentBuilder will act as true and 0 and below will act as false.
      *
-     * @param dispatcherConsumer The consumer to register commands with.
+     * @param dispatcherConsumer The consumer to register commands with and to return the LiteralCommandNode.
      */
-    public BrigadierExecutor(JavaPlugin plugin, PluginCommand command, @NonNull Function<CommandDispatcher<CommandSender>, LiteralCommandNode<CommandSender>> dispatcherConsumer) {
+    public BrigadierExecutor(@NonNull Function<CommandDispatcher<CommandSender>, LiteralCommandNode<CommandSender>> dispatcherConsumer) {
         this.commandDispatcher = new CommandDispatcher<>();
-        LiteralCommandNode<CommandSender> res = dispatcherConsumer.apply(commandDispatcher);
+        this.commandNode = dispatcherConsumer.apply(commandDispatcher);
+    }
+
+    public void registerCommand(JavaPlugin plugin, PluginCommand command) {
         command.setExecutor(this);
         if (CommodoreProvider.isSupported()) {
             Commodore commodore = CommodoreProvider.getCommodore(plugin);
-            commodore.register(command, res);
+            commodore.register(command, commandNode);
         }
     }
 
