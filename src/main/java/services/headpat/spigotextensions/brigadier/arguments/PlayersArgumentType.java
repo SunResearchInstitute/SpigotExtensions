@@ -29,7 +29,7 @@ public class PlayersArgumentType implements ArgumentType<Collection<? extends Pl
      * @return {@link PlayersArgumentType} instance.
      */
     public static @NonNull
-    PlayersArgumentType player() {
+    PlayersArgumentType players() {
         return new PlayersArgumentType();
     }
 
@@ -40,7 +40,7 @@ public class PlayersArgumentType implements ArgumentType<Collection<? extends Pl
      * @param name    Name of the argument.
      * @return The player specified by the argument name in the command context.
      */
-    public static Collection<? extends Player> getPlayer(@NonNull CommandContext<?> context, String name) {
+    public static Collection<? extends Player> getPlayers(@NonNull CommandContext<?> context, String name) {
         return ((Collection<? extends Player>) context.getArgument(name, Collection.class));
     }
 
