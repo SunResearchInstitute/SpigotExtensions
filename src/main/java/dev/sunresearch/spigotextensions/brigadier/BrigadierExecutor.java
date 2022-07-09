@@ -1,4 +1,4 @@
-package services.headpat.spigotextensions.brigadier;
+package dev.sunresearch.spigotextensions.brigadier;
 
 import com.google.common.collect.ObjectArrays;
 import com.mojang.brigadier.CommandDispatcher;
