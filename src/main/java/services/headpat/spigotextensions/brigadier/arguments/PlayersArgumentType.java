@@ -46,8 +46,8 @@ public class PlayersArgumentType implements ArgumentType<Collection<? extends Pl
 
     @Override
     public Collection<? extends Player> parse(@NonNull StringReader reader) throws CommandSyntaxException {
-        String str = reader.readString();
-        if (str.equals("*")) {
+        String str = reader.readUnquotedString();
+        if (str.equals("**")) {
             return Bukkit.getOnlinePlayers();
         }
 
@@ -62,7 +62,7 @@ public class PlayersArgumentType implements ArgumentType<Collection<? extends Pl
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, @NonNull SuggestionsBuilder builder) {
         List<String> strings = Bukkit.getOnlinePlayers().stream().map(HumanEntity::getName).collect(Collectors.toList());
-        strings.add("*");
+        strings.add("**");
         strings.forEach(s -> {
             if (s.toLowerCase().startsWith(builder.getRemaining().toLowerCase()))
                 builder.suggest(s);
